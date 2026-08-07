@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiruthick K — Software Engineer / Backend Developer</title>
+<meta name="description" content="Kiruthick K — Final-year IT student and backend developer specializing in Java, Node.js, REST APIs, MongoDB and MySQL. Portfolio, projects and experience.">
+<meta property="og:title" content="Kiruthick K — Software Engineer / Backend Developer">
+<meta property="og:description" content="Final-year IT student specializing in backend development — Java, Node.js, REST APIs, MongoDB, MySQL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root, [data-theme="dark"]{
+    --bg: #0F1417; --bg-raised: #161C20; --bg-raised-2:#1C242A; --line: #2A3236;
+    --text: #E8ECEE; --text-dim: #8B979D; --text-faint: #5B666B;
+    --accent: #F0B429; --accent-dim: #6B5420; --ok: #4FD1C5; --ok-dim: #1E4B47;
+    --shadow: 0 20px 40px -20px rgba(0,0,0,0.5);
+  }
+  [data-theme="light"]{
+    --bg: #F7F5F0; --bg-raised: #FFFFFF; --bg-raised-2:#F0EDE6; --line: #E1DDD3;
+    --text: #1B1F22; --text-dim: #5B646A; --text-faint: #8B928F;
+    --accent: #B8791E; --accent-dim: #F0DFB8; --ok: #0E8074; --ok-dim: #CFEEE9;
+    --shadow: 0 20px 40px -24px rgba(30,25,10,0.18);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg); color:var(--text); font-family:'Inter',sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased; transition:background .3s ease, color .3s ease;
+  }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* progress bar */
+  #progress{ position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--ok),var(--accent)); width:0%; z-index:100; transition:width .1s linear; }
+
+  /* nav */
+  nav{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:color-mix(in srgb, var(--bg) 85%, transparent); border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .brand{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:15px; letter-spacing:0.5px; display:flex; align-items:center; gap:10px; }
+  .brand img{ width:28px; height:28px; border-radius:50%; object-fit:cover; border:1px solid var(--line); }
+  .brand .dot{ color:var(--ok); }
+  .navlinks{ display:flex; align-items:center; gap:24px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-dim); }
+  .navlinks a{ position:relative; transition:color .15s; white-space:nowrap; }
+  .navlinks a::after{ content:''; position:absolute; left:0; right:100%; bottom:-4px; height:1px; background:var(--accent); transition:right .25s ease; }
+  .navlinks a:hover::after{ right:0; }
+  .navlinks a:hover{ color:var(--accent); }
+  @media (max-width:900px){ .navlinks a:not(.themebtn-wrap){ display:none; } }
+
+  .themebtn{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--bg-raised);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:15px; transition:transform .2s ease, border-color .2s;
+  }
+  .themebtn:hover{ border-color:var(--accent); transform:rotate(20deg); }
+
+  /* hero */
+  header.hero{ padding:80px 0 60px; border-bottom:1px solid var(--line); }
+  .hero-grid{ display:grid; grid-template-columns:1.3fr 0.9fr; gap:48px; align-items:center; }
+  @media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } .hero-photo-wrap{ order:-1; max-width:220px; margin:0 auto; } }
+
+  .status-line{ font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ok); display:flex; align-items:center; gap:8px; margin-bottom:20px; }
+  .status-dot{ width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px var(--ok-dim); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  .rise{ opacity:0; transform:translateY(16px); animation:rise .6s cubic-bezier(.2,.8,.2,1) forwards; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  h1.name{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:clamp(32px,5.4vw,50px); letter-spacing:-1px; margin-bottom:10px; }
+  .role-line{ font-size:18px; color:var(--text-dim); margin-bottom:20px; height:26px; }
+  .role-line .cyc{ color:var(--accent); font-weight:600; }
+  .role-line .cursor2{ display:inline-block; width:2px; background:var(--accent); animation:blink 1s step-end infinite; margin-left:1px; }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .summary{ max-width:560px; color:var(--text-dim); font-size:15px; margin-bottom:28px; }
+
+  .btn-row{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:26px; }
+  .btn{ font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 20px; border-radius:7px; font-weight:500; transition:transform .15s ease, box-shadow .15s ease; cursor:pointer; border:1px solid var(--line); }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--accent); color:var(--bg); border-color:var(--accent); }
+  .btn-primary:hover{ box-shadow:0 10px 24px -8px var(--accent-dim); }
+  .btn-outline{ background:transparent; color:var(--text); }
+  .btn-outline:hover{ border-color:var(--ok); color:var(--ok); }
+
+  .contact-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{ font-family:'JetBrains Mono',monospace; font-size:12px; padding:7px 13px; border:1px solid var(--line); border-radius:6px; color:var(--text-dim); transition:border-color .15s, color .15s, transform .15s; }
+  .chip:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+  .hero-photo-wrap{ position:relative; }
+  .hero-photo{
+    position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+    box-shadow:var(--shadow); aspect-ratio:4/5;
+  }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; }
+  .frame-corner{ position:absolute; width:22px; height:22px; border-color:var(--accent); opacity:.9; }
+  .fc-tl{ top:-1px; left:-1px; border-top:2px solid var(--accent); border-left:2px solid var(--accent); }
+  .fc-br{ bottom:-1px; right:-1px; border-bottom:2px solid var(--accent); border-right:2px solid var(--accent); }
+  .avail-badge{
+    position:absolute; bottom:14px; left:14px; background:var(--bg); border:1px solid var(--line);
+    border-radius:20px; padding:6px 12px; display:flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px;
+    box-shadow:var(--shadow);
+  }
+
+  /* sections */
+  section{ padding:64px 0; border-bottom:1px solid var(--line); }
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .eyebrow .verb{ color:var(--ok); }
+  .eyebrow .code{ margin-left:auto; padding:2px 8px; border:1px solid var(--ok-dim); border-radius:4px; color:var(--ok); opacity:0; transition:opacity .3s ease .5s; }
+  .reveal.in .eyebrow .code{ opacity:1; }
+  h2.h{ font-size:24px; font-weight:700; margin-bottom:26px; }
+  .section-sub{ color:var(--text-dim); font-size:14px; margin-top:-16px; margin-bottom:26px; max-width:600px; }
+
+  /* about */
+  .about-text{ color:var(--text-dim); font-size:15px; max-width:640px; }
+  .stat-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:14px; margin-top:28px; }
+  .stat-card{ background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:18px; text-align:center; transition:transform .2s, border-color .2s; }
+  .stat-card:hover{ transform:translateY(-4px); border-color:var(--accent-dim); }
+  .stat-num{ font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--accent); font-weight:700; }
+  .stat-label{ font-size:12px; color:var(--text-faint); margin-top:4px; }
+  .strength-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:24px; }
+  .strength{ background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:16px 18px; font-size:13.5px; color:var(--text-dim); transition:border-color .2s; }
+  .strength:hover{ border-color:var(--ok-dim); color:var(--text); }
+  .strength b{ display:block; color:var(--text); font-size:14px; margin-bottom:3px; }
+
+  /* experience */
+  .job{ padding:24px 0; border-top:1px solid var(--line); transition:padding-left .25s ease; }
+  .job:hover{ padding-left:10px; }
+  .job:first-of-type{ border-top:none; padding-top:0; }
+  .job-top{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 16px; }
+  .job-title{ font-weight:700; font-size:16px; }
+  .job-org{ color:var(--accent); font-weight:500; }
+  .job-date{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); white-space:nowrap; }
+  .job ul{ list-style:none; margin-top:12px; }
+  .job li{ position:relative; padding-left:18px; color:var(--text-dim); font-size:14px; margin-bottom:7px; }
+  .job li::before{ content:'›'; position:absolute; left:0; color:var(--ok); }
+  .job-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .job-tags span{ font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 8px; border:1px solid var(--line); border-radius:5px; color:var(--text-faint); }
+
+  /* grid cards generic */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; }
+  .card{ background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:20px; transition:border-color .2s, transform .2s ease; }
+  .card:hover{ border-color:var(--accent-dim); transform:translateY(-4px); }
+  .card-head{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; gap:8px; }
+  .card-title{ font-weight:700; font-size:15px; }
+  .card-tag{ font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--ok); border:1px solid var(--ok-dim); padding:2px 6px; border-radius:4px; white-space:nowrap; }
+  .card p{ color:var(--text-dim); font-size:13.5px; margin-bottom:10px; }
+  .card .job-tags{ margin-top:8px; }
+  .card-links{ display:flex; gap:10px; margin-top:12px; }
+  .card-links a{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-dim); border-bottom:1px dashed var(--line); transition:color .15s, border-color .15s; }
+  .card-links a:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* skills */
+  .skill-group{ margin-bottom:24px; }
+  .skill-label{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); margin-bottom:10px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:7px 13px; background:var(--bg-raised); border:1px solid var(--line); border-radius:6px; color:var(--text); transition:border-color .15s, transform .15s, color .15s; }
+  .tag:hover{ border-color:var(--ok); color:var(--ok); transform:translateY(-2px); }
+
+  /* placeholder / TODO cards */
+  .placeholder{ background:transparent; border:1.5px dashed var(--line); border-radius:10px; padding:24px; text-align:center; color:var(--text-faint); font-size:13.5px; }
+  .placeholder b{ display:block; color:var(--text-dim); font-size:14px; margin-bottom:6px; }
+
+  /* timeline (education / achievements) */
+  .timeline{ position:relative; padding-left:28px; }
+  .timeline::before{ content:''; position:absolute; left:6px; top:4px; bottom:4px; width:1px; background:var(--line); }
+  .tl-item{ position:relative; padding-bottom:28px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{ content:''; position:absolute; left:-28px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--bg); border:2px solid var(--accent); }
+  .tl-date{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-faint); }
+  .tl-title{ font-weight:700; font-size:15px; margin-top:3px; }
+  .tl-org{ color:var(--accent); font-size:13.5px; margin-top:2px; }
+  .tl-note{ color:var(--text-dim); font-size:13.5px; margin-top:6px; max-width:560px; }
+
+  /* coding profiles */
+  .profile-card{ background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:18px; text-align:center; transition:transform .2s, border-color .2s; }
+  .profile-card:hover{ transform:translateY(-4px); border-color:var(--ok-dim); }
+  .profile-card .pf-name{ font-weight:700; font-size:14px; margin-bottom:4px; }
+  .profile-card .pf-status{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint); }
+
+  /* contact form */
+  .contact-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; }
+  @media (max-width:820px){ .contact-grid{ grid-template-columns:1fr; } }
+  form{ display:flex; flex-direction:column; gap:14px; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-faint); }
+  .field input, .field textarea{
+    background:var(--bg-raised); border:1px solid var(--line); border-radius:7px; padding:11px 13px;
+    color:var(--text); font-family:'Inter',sans-serif; font-size:14px; outline:none; transition:border-color .15s;
+  }
+  .field input:focus, .field textarea:focus{ border-color:var(--accent); }
+  .field textarea{ resize:vertical; min-height:110px; }
+  .info-card{ background:var(--bg-raised); border:1px solid var(--line); border-radius:10px; padding:22px; }
+  .info-row{ display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
+  .info-row:last-child{ border-bottom:none; }
+  .info-row .ic{ width:30px; height:30px; border-radius:7px; background:var(--bg-raised-2); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+
+  /* footer */
+  footer{ padding:50px 0 40px; }
+  footer .foot-grid{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:28px; margin-bottom:34px; }
+  footer .foot-links{ display:flex; gap:20px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-dim); flex-wrap:wrap; }
+  footer .foot-links a:hover{ color:var(--accent); }
+  footer .copy{ text-align:center; font-size:11.5px; color:var(--text-faint); padding-top:24px; border-top:1px solid var(--line); }
+  footer .copy b{ color:var(--text-dim); font-weight:500; }
+</style>
+</head>
+<body data-theme="dark">
+
+<div id="progress"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><img src="kiruthick.png" alt="Kiruthick K"> kiruthick<span class="dot">.</span>k</div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#education">education</a>
+      <a href="#contact">contact</a>
+      <div class="themebtn themebtn-wrap" id="themeBtn" title="Toggle theme">🌙</div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="status-line rise" style="animation-delay:.05s"><span class="status-dot"></span>OPEN TO SDE / BACKEND / JAVA DEVELOPER ROLES</div>
+      <h1 class="name rise" style="animation-delay:.15s">Kiruthick K</h1>
+      <div class="role-line rise mono" style="animation-delay:.25s"><span id="roleCyc" class="cyc"></span><span class="cursor2">&nbsp;</span></div>
+      <p class="summary rise" style="animation-delay:.35s">
+        Final-year IT student and backend developer building secure, scalable applications —
+        REST APIs, authentication and CRUD systems across Java/Spring Boot and the
+        Node.js/Express/MongoDB stack, with strong fundamentals in database design and
+        problem-solving.
+      </p>
+
+      <div class="btn-row rise" style="animation-delay:.45s">
+        <a class="btn btn-primary" href="Kiruthick_K_Resume.pdf" download>Download Resume</a>
+        <a class="btn btn-outline" href="#projects">View Projects</a>
+        <a class="btn btn-outline" href="#contact">Contact Me</a>
+      </div>
+
+      <div class="contact-row rise" style="animation-delay:.55s">
+        <a class="chip" href="https://github.com/kiruthick0007" target="_blank" rel="noopener">GitHub</a>
+        <a class="chip" href="https://www.linkedin.com/in/kiruthick-k-0007k" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="chip" href="mailto:kiruthick0007@gmail.com">Email</a>
+        <a class="chip" href="tel:+916379886425">+91 6379886425</a>
+      </div>
+    </div>
+
+    <div class="hero-photo-wrap rise" style="animation-delay:.3s">
+      <div class="hero-photo">
+        <img src="kiruthick.png" alt="Kiruthick K — portrait">
+        <div class="frame-corner fc-tl"></div>
+        <div class="frame-corner fc-br"></div>
+        <div class="avail-badge"><span class="status-dot"></span>Available</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/about</span><span class="code">200</span></div>
+    <h2 class="h">About Me</h2>
+
+    <p class="about-text">
+      Final-year Information Technology student (B.Tech, 2023–2027) at N.S.N. College of
+      Engineering and Technology, Anna University, focused on backend development — designing
+      RESTful APIs, modeling databases, and building the authentication and data layers that
+      keep an application running securely. Comfortable moving between Java/Spring Boot and
+      the Node.js/Express/MongoDB stack, and drawn to the problem-solving side of shipping
+      clean, reliable server-side code. Currently looking for Software Engineer, Full Stack
+      Developer, Backend Developer, or Java Developer roles where I can keep learning while
+      contributing to real products.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">2027</div><div class="stat-label">Graduating</div></div>
+      <div class="stat-card"><div class="stat-num">3+</div><div class="stat-label">Projects shipped</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Backend internships</div></div>
+      <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">Core technologies</div></div>
+    </div>
+
+    <div class="strength-grid">
+      <div class="strength"><b>Backend-first mindset</b>API design, authentication and database structure over just making things work.</div>
+      <div class="strength"><b>Dual-stack comfort</b>Equally at home in Java/Spring Boot and Node.js/Express/MongoDB.</div>
+      <div class="strength"><b>Debugging & optimization</b>Hands-on experience testing and tuning backend services with Postman and Git.</div>
+      <div class="strength"><b>Continuous learner</b>Actively building projects and training outside coursework to stay current.</div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/skills</span><span class="code">200</span></div>
+    <h2 class="h">Technical Skills</h2>
+
+    <div class="skill-group">
+      <div class="skill-label">// programming languages</div>
+      <div class="tags"><span class="tag">Java</span><span class="tag">Python</span><span class="tag">Node.js</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">// backend technologies</div>
+      <div class="tags"><span class="tag">Spring Boot</span><span class="tag">Express.js</span><span class="tag">REST APIs</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">// databases</div>
+      <div class="tags"><span class="tag">MongoDB</span><span class="tag">MySQL</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">// tools & platforms</div>
+      <div class="tags"><span class="tag">VS Code</span><span class="tag">Postman</span><span class="tag">Git</span></div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">// concepts</div>
+      <div class="tags"><span class="tag">OOP</span><span class="tag">DBMS</span><span class="tag">Problem Solving</span></div>
+    </div>
+    <div class="skill-group" style="margin-bottom:0;">
+      <div class="skill-label">// frontend & cloud — add if applicable</div>
+      <div class="placeholder">Frontend frameworks (React, etc.) and Cloud/DevOps tools weren't listed on your resume — tell me what to add here and I'll wire it in.</div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/experience</span><span class="code">200</span></div>
+    <h2 class="h">Internship & Experience</h2>
+
+    <div class="job">
+      <div class="job-top">
+        <div><span class="job-title">Backend Developer Intern</span> · <span class="job-org">Vulture Lines Tech Management Pvt. Ltd.</span></div>
+      </div>
+      <ul>
+        <li>Designed and developed RESTful APIs using Node.js, Express.js, and MongoDB to support user authentication, data management, and backend application functionality.</li>
+        <li>Collaborated with the development team to test, debug, and optimize backend services using Postman, Git, and MongoDB, improving API reliability and application performance.</li>
+      </ul>
+      <div class="job-tags"><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Postman</span><span>Git</span></div>
+    </div>
+
+    <div class="job">
+      <div class="job-top">
+        <div><span class="job-title">Backend Developer</span> · <span class="job-org">Training Trains Software Technologies & Institute</span></div>
+        <div class="job-date">15 Jun 2026 – 30 Jun 2026</div>
+      </div>
+      <ul>
+        <li>Completed hands-on training in backend development, focusing on server-side programming and REST APIs.</li>
+        <li>Gained practical experience with Node.js, Express.js, database integration, and backend development fundamentals.</li>
+      </ul>
+      <div class="job-tags"><span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>Database Integration</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/projects</span><span class="code">200</span></div>
+    <h2 class="h">Projects</h2>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-head"><span class="card-title">Assessment Management System</span><span class="card-tag">MERN</span></div>
+        <p>Full-stack system for managing assessments end to end, built on MongoDB, Express, React, and Node.</p>
+        <div class="job-tags"><span>MongoDB</span><span>Express</span><span>React</span><span>Node.js</span></div>
+        <div class="card-links"><a href="https://github.com/kiruthick0007" target="_blank" rel="noopener">GitHub profile ↗</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title">MERN Product Store</span><span class="card-tag">MERN</span></div>
+        <p>Product catalog application with CRUD operations across a React front end and an Express/MongoDB backend.</p>
+        <div class="job-tags"><span>MongoDB</span><span>Express</span><span>React</span><span>Node.js</span></div>
+        <div class="card-links"><a href="https://github.com/kiruthick0007" target="_blank" rel="noopener">GitHub profile ↗</a></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title">Library Book Management System</span><span class="card-tag">BACKEND</span></div>
+        <p>System for tracking books, members, and checkouts, with a relational database driving core operations.</p>
+        <div class="job-tags"><span>MySQL</span><span>Backend</span></div>
+        <div class="card-links"><a href="https://github.com/kiruthick0007" target="_blank" rel="noopener">GitHub profile ↗</a></div>
+      </div>
+    </div>
+    <p class="section-sub" style="margin-top:22px; margin-bottom:0;">Repo and live-demo links above point to your GitHub profile as a placeholder — send me the specific repo/demo URLs per project and I'll link each card directly.</p>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/achievements</span><span class="code">204</span></div>
+    <h2 class="h">Achievements</h2>
+    <div class="placeholder">
+      <b>No achievements listed yet</b>
+      Hackathons, competitions, academic awards, workshops, conferences, and open-source contributions will show up here as a timeline — share the details and I'll add them.
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/certifications</span><span class="code">204</span></div>
+    <h2 class="h">Certifications</h2>
+    <div class="placeholder">
+      <b>No certifications listed yet</b>
+      Send certificate names, issuing organizations, dates, and verification links (or the certificate images) and I'll turn each into a card here.
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/education</span><span class="code">200</span></div>
+    <h2 class="h">Education</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2023 – 2027</div>
+        <div class="tl-title">B.Tech, Information Technology</div>
+        <div class="tl-org">N.S.N. College of Engineering and Technology · Anna University, Tamil Nadu</div>
+        <div class="tl-note">Passionate about backend development and problem-solving, with a continuous-learning mindset geared toward contributing to real software solutions.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="coding-profiles">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">GET</span><span class="path">/coding-profiles</span><span class="code">200</span></div>
+    <h2 class="h">Coding Profiles</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(160px,1fr));">
+      <a class="profile-card" href="https://github.com/kiruthick0007" target="_blank" rel="noopener">
+        <div class="pf-name">GitHub</div><div class="pf-status mono">kiruthick0007 ↗</div>
+      </a>
+      <a class="profile-card" href="https://www.linkedin.com/in/kiruthick-k-0007k" target="_blank" rel="noopener">
+        <div class="pf-name">LinkedIn</div><div class="pf-status mono">kiruthick-k-0007k ↗</div>
+      </a>
+      <div class="profile-card" style="opacity:.55;">
+        <div class="pf-name">LeetCode</div><div class="pf-status mono">not linked yet</div>
+      </div>
+      <div class="profile-card" style="opacity:.55;">
+        <div class="pf-name">HackerRank</div><div class="pf-status mono">not linked yet</div>
+      </div>
+      <div class="profile-card" style="opacity:.55;">
+        <div class="pf-name">CodeChef</div><div class="pf-status mono">not linked yet</div>
+      </div>
+      <div class="profile-card" style="opacity:.55;">
+        <div class="pf-name">GeeksforGeeks</div><div class="pf-status mono">not linked yet</div>
+      </div>
+    </div>
+    <p class="section-sub" style="margin-top:20px; margin-bottom:0;">Send your LeetCode / HackerRank / CodeChef / GfG usernames and I'll link them (live stats need those platforms' own embeds or an API key, so I'd wire that up separately if you want it).</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="verb">POST</span><span class="path">/contact</span><span class="code">200</span></div>
+    <h2 class="h">Contact</h2>
+
+    <div class="contact-grid">
+      <form id="contactForm">
+        <div class="field"><label for="cf-name">Name</label><input id="cf-name" name="name" type="text" required placeholder="Your name"></div>
+        <div class="field"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" required placeholder="you@example.com"></div>
+        <div class="field"><label for="cf-subject">Subject</label><input id="cf-subject" name="subject" type="text" placeholder="What's this about?"></div>
+        <div class="field"><label for="cf-message">Message</label><textarea id="cf-message" name="message" required placeholder="Say hello..."></textarea></div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send Message</button>
+        <div class="section-sub" style="margin:8px 0 0;">This opens your email client with the message pre-filled — it isn't wired to a backend yet.</div>
+      </form>
+
+      <div class="info-card">
+        <div class="info-row"><div class="ic">📧</div><a href="mailto:kiruthick0007@gmail.com">kiruthick0007@gmail.com</a></div>
+        <div class="info-row"><div class="ic">📞</div><a href="tel:+916379886425">+91 6379886425</a></div>
+        <div class="info-row"><div class="ic">📍</div>Tamil Nadu, India</div>
+        <div class="info-row"><div class="ic">🔗</div><a href="https://www.linkedin.com/in/kiruthick-k-0007k" target="_blank" rel="noopener">LinkedIn</a></div>
+        <div class="info-row"><div class="ic">🐙</div><a href="https://github.com/kiruthick0007" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand"><img src="kiruthick.png" alt="Kiruthick K"> kiruthick<span class="dot">.</span>k</div>
+      <div class="foot-links">
+        <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a>
+        <a href="#projects">Projects</a><a href="#education">Education</a><a href="#contact">Contact</a>
+      </div>
+      <div class="foot-links">
+        <a href="https://github.com/kiruthick0007" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/kiruthick-k-0007k" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:kiruthick0007@gmail.com">Email</a>
+      </div>
+    </div>
+    <div class="copy">Designed & developed by <b>Kiruthick K</b> · © <span id="yr"></span> All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // theme toggle
+  var themeBtn = document.getElementById('themeBtn');
+  themeBtn.addEventListener('click', function(){
+    var body = document.body;
+    var isDark = body.getAttribute('data-theme') === 'dark';
+    body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeBtn.textContent = isDark ? '☀️' : '🌙';
+  });
+
+  // scroll progress
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    document.getElementById('progress').style.width = scrolled + '%';
+  });
+
+  // reveal on scroll
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){ entry.target.classList.add('in'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+
+  // typing role animation
+  var roles = ['Software Engineer', 'Full Stack Developer', 'Backend Developer', 'Java Developer', 'Problem Solver'];
+  var roleEl = document.getElementById('roleCyc');
+  var ri = 0, ci = 0, deleting = false;
+  function tick(){
+    var word = roles[ri];
+    if(!deleting){
+      ci++;
+      roleEl.textContent = word.slice(0, ci);
+      if(ci === word.length){ deleting = true; setTimeout(tick, 1300); return; }
+    } else {
+      ci--;
+      roleEl.textContent = word.slice(0, ci);
+      if(ci === 0){ deleting = false; ri = (ri+1) % roles.length; }
+    }
+    setTimeout(tick, deleting ? 40 : 70);
+  }
+  tick();
+
+  // contact form -> mailto
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('cf-name').value;
+    var email = document.getElementById('cf-email').value;
+    var subject = document.getElementById('cf-subject').value || 'Portfolio contact form';
+    var message = document.getElementById('cf-message').value;
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+    window.location.href = 'mailto:kiruthick0007@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
